@@ -51,5 +51,4 @@ public class Article {
 		this.type = type;
 	}
 	
-	
 }
