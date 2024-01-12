@@ -43,8 +43,6 @@
 <tr><td colspan="6">INTEGRANTES:
 <ul>
 <li>Roni Companocca Checco</li>
-<li>William Herderson Choquehuanca Berna</li>
-<li>Franco Jesus Cahua Soto</li>
 </ul>
 </td>
 </<tr>
@@ -57,7 +55,7 @@
 </tdbody>
 </table>
 
-# JAVA
+# Django
 
 [![License][license]][license-file]
 [![Downloads][downloads]][releases]

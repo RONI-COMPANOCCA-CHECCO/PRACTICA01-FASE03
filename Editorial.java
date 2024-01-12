@@ -10,16 +10,16 @@ public class Editorial {
     private ArrayList<Article> articles;
     private ArrayList<Branch> branches;
     private ArrayList<Author> authors;
-    private Map<String, List<Author>> nameToAuthors; // Mapeo de nombres de autor a lista de autores
-    private Map<Author, List<Book>> authorBooks;	
+    private Map<Author, List<Book>> authorBooks;
+
 	public Editorial(String name) {
-		this.name = name;
+        this.name = name;
         this.articles = new ArrayList<>();
         this.branches = new ArrayList<>();
         this.authors = new ArrayList<>();
-        this.nameToAuthors = new HashMap<>();
         this.authorBooks = new HashMap<>();
-	}
+    }
+
 	public String getName() {
 		return name;
 	}
@@ -47,31 +47,8 @@ public class Editorial {
 
             if (article instanceof Book) {
                 Author author = ((Book) article).getAuthor();
-                String authorName = author.getName();
-
-                // Si el nombre del autor ya existe, verificar si es un autor diferente
-                if (nameToAuthors.containsKey(authorName)) {
-                    List<Author> authorsWithSameName = nameToAuthors.get(authorName);
-                    boolean isNewAuthor = true;
-
-                    for (Author existingAuthor : authorsWithSameName) {
-                        if (existingAuthor.getCode().equals(author.getCode())) {
-                            isNewAuthor = false;
-                            author = existingAuthor;
-                            break;
-                        }
-                    }
-
-                    if (isNewAuthor) {
-                        authors.add(author);
-                        authorsWithSameName.add(author);
-                    }
-                } else {
-                    // Si el nombre del autor no existe, agregar el nuevo autor
+                if (!authors.contains(author)) {
                     authors.add(author);
-                    List<Author> newAuthorList = new ArrayList<>();
-                    newAuthorList.add(author);
-                    nameToAuthors.put(authorName, newAuthorList);
                 }
 
                 // Almacenar el libro bajo el autor
@@ -81,9 +58,15 @@ public class Editorial {
             return true;
         }
     }
-	public void clearBooks() {
-		this.articles.clear();
-	}	
+
+	public boolean addBranch(Branch branch) {
+        if (branches.contains(branch)) {
+            return false;
+        } else {
+            branches.add(branch);
+            return true;
+        }
+    }	
 	
 	public boolean searchBooks(String code) {
 		for(int i=0;i<articles.size();i++) {
@@ -98,18 +81,29 @@ public class Editorial {
 	}
 	
 	public void printArticles() {
-		for(int i=0;i<articles.size();i++) {
-			System.out.println("Editorial : " + this.getName());
-			System.out.println("------------------------");
-			System.out.println("Codigo : " + articles.get(i).getCode());
-			System.out.println("Titulo : " + articles.get(i).getTitle());
-			System.out.println("Paginas : " + articles.get(i).getPages());
-			System.out.println("\n");
-		}
+		for (Article article : articles) {
+            System.out.println("Editorial: " + this.getName());
+            System.out.println("------------------------");
+            System.out.println("Código: " + article.getCode());
+            System.out.println("Título: " + article.getTitle());
+            System.out.println("Páginas: " + article.getPages());
+            System.out.println("Autor: " + ((Book) article).getAuthor().getName());
+            System.out.println("\n");
+
+            /*if (article instanceof Book) {
+                System.out.println("ISBN: " + ((Book) article).getISBN());
+                System.out.println("Autor: " + ((Book) article).getAuthor().getName());
+            } else if (article instanceof Thesis) {
+              
+            } else if (article instanceof Journal) {
+     
+            }*/
+   
+        }
 		
 	}
-	public void printAuthorBooks() {
-        System.out.println("Libros por Autor:");
+    public void printAuthorBooks() {
+        System.out.println("\n----Libros por Autor:----");
 
         for (Author author : authorBooks.keySet()) {
             System.out.println("Autor: " + author.getName());
@@ -117,20 +111,6 @@ public class Editorial {
             
             for (Book book : books) {
                 System.out.println(" - Libro: " + book.getTitle());
-            }
-        }
-    }
-	public void printAuthorsWithSameName() {
-        System.out.println("Autores con el mismo nombre:");
-
-        for (String authorName : nameToAuthors.keySet()) {
-            List<Author> authorsWithSameName = nameToAuthors.get(authorName);
-            if (authorsWithSameName.size() > 1) {
-                System.out.println("Nombre: " + authorName);
-
-                for (Author author : authorsWithSameName) {
-                    System.out.println(" - ID: " + author.getCode());
-                }
             }
         }
     }
