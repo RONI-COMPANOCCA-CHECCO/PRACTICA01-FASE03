@@ -70,7 +70,7 @@
 [![Java][Java]][java-site]
 <div align="center">
 
-# **BIENVENIDOS A FUNDAMENTOS DE PROGRAMACIÓN 2 - LABORATORIO**
+# **BIENVENIDOS A FUNDAMENTOS DE PROGRAMACIÓN 2 - TEORIA - B**
 
 <a href="https://ibb.co/3NxfBVF"><img src="https://i.ibb.co/Yk5DpJd/sistemas.jpg" alt="sistemas" border="0"></a>
 
